@@ -15,18 +15,26 @@ public class Main {
         annualInterest = (float) readNumber("Annual Interest Rate: ", 1, 30);
         years = (byte) readNumber("Period (Years): ", 1, 30);
 
+        printMortgage(principal, annualInterest, years);
+
+        printPaymentSchedule(years, principal, annualInterest);
+    }
+
+    private static void printMortgage(int principal, float annualInterest, byte years) {
         double mortgage = calculateMortgage(principal, annualInterest, years);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("---------------");
         System.out.println("Monthly Payments: " + mortgageFormatted);
+    }
 
+    private static void printPaymentSchedule(byte years, int principal, float annualInterest) {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("---------------");
         for (short month = 1; month <= years * MONTHS_IN_YEAR; month++) {
-            double balance = calculateBalance(principal,annualInterest,years,month);
+            double balance = calculateBalance(principal, annualInterest, years, month);
             System.out.println(NumberFormat.getCurrencyInstance().format(balance));
         }
     }
@@ -41,7 +49,7 @@ public class Main {
 
         double mortgage = principal
                 * (monthlyInterest * Math.pow(1 + monthlyInterest, numberOfPayments))
-                / (Math.pow(1 + monthlyInterest, numberOfPayments) -1);
+                / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
 
         return mortgage;
     }
